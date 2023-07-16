@@ -1,52 +1,77 @@
-# Prerequisites
-*.d
+int buzzer =1;
+#include <LiquidCrystal.h>
+#include <Servo.h>
+int servoPin = 3;
+Servo Servo1;
+int trigPin = 13;
+int echoPin = 12;
+int sure ; 
+int mesafe;
+const int yled = 3;
+const int sled = 6;
+const int kled = 5;
+LiquidCrystal LCD(11,10,9,8,6,4,2); 
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+void setup()
+{
+ LCD.begin(16,2);
+ LCD.setCursor(1,0);
+ Servo1.attach(7);
+ pinMode(trigPin, OUTPUT); 
+ pinMode(echoPin, INPUT); 
+ Serial.begin(9600); 
+ pinMode(buzzer , OUTPUT);  
+ pinMode(yled,OUTPUT); 
+ pinMode(sled,OUTPUT);
+ pinMode(kled,OUTPUT);
+  digitalWrite(3,LOW);
+  digitalWrite(4,LOW);
+  digitalWrite(5,LOW); 
+}
 
-# Linker output
-*.ilk
-*.map
-*.exp
+void loop()
+{
+  digitalWrite(trigPin, HIGH);
 
-# Precompiled Headers
-*.gch
-*.pch
+  delayMicroseconds(1000);
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+  digitalWrite(trigPin , LOW);
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+  sure = pulseIn(echoPin , HIGH);
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+  mesafe = (sure / 2) / 29.1;
+  if (mesafe <= 10) 
+  {	
+    digitalWrite(yled,LOW);
+    Servo1.write(180);
+    digitalWrite(buzzer , HIGH);
+    digitalWrite(kled,HIGH);
+    delay(100);
+    digitalWrite(buzzer , LOW );
+    digitalWrite(kled,LOW);
+    delay(10);
+    digitalWrite(buzzer , HIGH);
+    digitalWrite(kled,HIGH);
+    LCD.print("attention");
+    delay(100);
+	LCD.clear();
+  }
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+	
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+  else{
+  	
+    Servo1.write(0);
+    digitalWrite(kled,LOW);
+    digitalWrite(yled,HIGH);
+    digitalWrite(buzzer , LOW );
+    LCD.print("Safe");
+	
+	
+
+  } 
+}
+  
+
+
+
