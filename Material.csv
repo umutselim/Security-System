@@ -1,0 +1,9 @@
+﻿Ad,Miktar,Bileşen
+"DIST1",1," Ultrasonik Mesafe Sensörü"
+"D1",1,"Kırmızı LED"
+"D2",1,"Yeşil LED"
+"U1",1," LCD 16 x 2"
+"U2",1," Arduino Uno R3"
+"SERVO1",1,"Konumsal Mikro Servo"
+"R1, R2, R3",3,"330 Ω Rezistör"
+"PIEZO1",1," Piezo"
